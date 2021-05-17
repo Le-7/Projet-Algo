@@ -18,9 +18,9 @@ void viderBuffer()
     }
 }
 
-int lire(char *chaine, int longueur)
+int lireEntreeConsole(char *chaine, int longueur)
 {
-    viderBuffer();
+    //viderBuffer();
     char *positionEntree = NULL;
 
     if (fgets(chaine, longueur, stdin) != NULL)
@@ -344,11 +344,19 @@ Cocktail *obtenirCocktail(ListeCocktail *listeCocktail, char *nom) {
 
 void creationCocktail(Liste *liste, ListeCocktail *pCocktail, int client) {
 
-    printf("Quel est le nom de votre Cocktail ?\n");
-    char nom[50];
-    lire(nom,50);
-
+    char nom[50] = {""};
     int condition = 1;
+
+    while(condition == 1) {
+
+        printf("Quel est le nom de votre Cocktail ?\n");
+        lireEntreeConsole(nom, 50);
+        if(strcmp(nom,"") != 0){
+
+            condition = 0;
+
+        }
+    }
     char nomBoisson[100];
 
     Cocktail cocktail;
@@ -359,11 +367,11 @@ void creationCocktail(Liste *liste, ListeCocktail *pCocktail, int client) {
     int prix = 0;
     int compteur = 0;
 
-    while (condition == 1) {
+    while (condition == 0) {
 
         printf("Quelle boisson voulez vous utiliser?\n");
 
-        lire(nomBoisson,50);
+        lireEntreeConsole(nomBoisson, 100);
 
         if (listeBoissonContient(liste, nomBoisson) == 0) {
             printf("Nous ne proposons pas cette boisson\n");
@@ -387,12 +395,12 @@ void creationCocktail(Liste *liste, ListeCocktail *pCocktail, int client) {
 
 
         printf("Voulez vous utiliser une autre boisson?\n");
-        char *reponse = "";
-        scanf("%s", reponse);
+        char reponse[10];
+        lireEntreeConsole(reponse,10);
 
         if (strcmp(reponse, "non") == 0) {
 
-            condition = 0;
+            condition = 1;
 
         }
 
@@ -407,6 +415,7 @@ void creationCocktail(Liste *liste, ListeCocktail *pCocktail, int client) {
 void afficherMenuBarman(Liste *liste, ListeCocktail *pCocktail, ListeCommande *listeCommande) {
 
     int condition = 0;
+    char choix[10];
 
     while (condition == 0) {
 
@@ -418,8 +427,10 @@ void afficherMenuBarman(Liste *liste, ListeCocktail *pCocktail, ListeCommande *l
         printf("4. Gérer commandes\n");
         printf("5. Quitter\n");
         printf("Tapez 1, 2, 3, 4 ou 5\n");
-        fflush(stdout);
-        scanf("%i", &choice);
+
+        lireEntreeConsole(choix,10);
+
+        choice = strtol(choix,NULL,10);
 
         switch (choice) {
 
@@ -444,7 +455,7 @@ void afficherMenuBarman(Liste *liste, ListeCocktail *pCocktail, ListeCommande *l
                 afficherListeCommandes(listeCommande);
                 break;
 
-            default:
+            case 5:
 
                 choice = 0;
                 condition = 1;
@@ -453,18 +464,20 @@ void afficherMenuBarman(Liste *liste, ListeCocktail *pCocktail, ListeCommande *l
     }
 }
 
-Commande *commanderBoisson(Liste *liste, ListeCocktail *listeCocktail) {
+Commande *commanderBoisson(Liste *listeBoisson, ListeCocktail *listeCocktail) {
+
+    printf("Voici la listeBoisson des Boissons proposées: \n");
+    afficherListeBoisson(listeBoisson, listeCocktail);
 
     printf("Entrez le nom de votre Boisson\n");
-    fflush(stdout);
     char nomBoisson[100] = {0};
-    scanf("%s", nomBoisson);
+    lireEntreeConsole(nomBoisson,100);
 
-    if (listeBoissonContient(liste, nomBoisson) == 1) {
+    if (listeBoissonContient(listeBoisson, nomBoisson) == 1) {
 
-        if (obtenirBoisson(liste, nomBoisson)->nombreenstock > 0) {
+        if (obtenirBoisson(listeBoisson, nomBoisson)->nombreenstock > 0) {
 
-            Boisson *boisson = obtenirBoisson(liste, nomBoisson);
+            Boisson *boisson = obtenirBoisson(listeBoisson, nomBoisson);
             boisson->nombreenstock -= 1;
 
             Commande *commande = malloc(sizeof(*commande));
@@ -476,12 +489,11 @@ Commande *commanderBoisson(Liste *liste, ListeCocktail *listeCocktail) {
         } else {
 
             printf("Nous n'avons plus de %s en stock\n", nomBoisson);
-            fflush(stdout);
         }
 
     } else if (listeCocktailContient(listeCocktail, nomBoisson)) {
 
-        if (cocktailEnStock(obtenirCocktail(listeCocktail, nomBoisson), liste) == 0) {
+        if (cocktailEnStock(obtenirCocktail(listeCocktail, nomBoisson), listeBoisson) == 0) {
 
             Cocktail *cocktail = obtenirCocktail(listeCocktail, nomBoisson);
 
@@ -489,7 +501,7 @@ Commande *commanderBoisson(Liste *liste, ListeCocktail *listeCocktail) {
 
             while (actuel != NULL) {
 
-                obtenirBoisson(liste, actuel->nom)->nombreenstock -= 1;
+                obtenirBoisson(listeBoisson, actuel->nom)->nombreenstock -= 1;
                 actuel = actuel->suivant;
 
             }
@@ -505,7 +517,6 @@ Commande *commanderBoisson(Liste *liste, ListeCocktail *listeCocktail) {
     } else {
 
         printf("Nous ne proposons pas cette boisson\n");
-        fflush(stdout);
         return NULL;
 
     }
@@ -517,6 +528,7 @@ Commande *commanderBoisson(Liste *liste, ListeCocktail *listeCocktail) {
 void afficherMenuClient(Liste *liste, ListeCocktail *pCocktail, ListeCommande *listeCommandes) {
 
     int condition = 1;
+    char choix[10];
 
     while (condition == 1) {
 
@@ -528,9 +540,9 @@ void afficherMenuClient(Liste *liste, ListeCocktail *pCocktail, ListeCommande *l
         printf("4. Quitter\n");
         printf("Tapez 1, 2, 3 ou 4\n");
 
-        fflush(stdout);
-
-        scanf("%i", &choice);
+        lireEntreeConsole(choix,10);
+        choice = strtol(choix,NULL,10);
+        printf("%i\n",choice);
 
         switch (choice) {
 
@@ -572,10 +584,16 @@ void afficherMenu(Liste *liste, ListeCocktail *listeCocktail, ListeCommande *lis
         printf("2. Client\n");
         printf("3. Quitter\n");
         printf("Tapez 1,2 ou 3\n");
-        fflush(stdout);
 
+        char choix[10];
 
-        scanf("%i", &choice);
+        lireEntreeConsole(choix,10);
+
+        printf("%s\n",choix);
+
+        choice = strtol(choix,NULL,10);
+
+        printf("%i\n",choice);
 
         if (choice == 1) {
             choice = 0;
@@ -589,6 +607,10 @@ void afficherMenu(Liste *liste, ListeCocktail *listeCocktail, ListeCommande *lis
             choice = 0;
             condition = 0;
 
+        }else{
+
+            choice = 0;
+
         }
 
     }
@@ -597,20 +619,19 @@ void afficherMenu(Liste *liste, ListeCocktail *listeCocktail, ListeCommande *lis
 int main() {
 
     printf("Bienvenue dans le Bar !\n");
-    fflush(stdout);
 
     Liste *listeBoisson = initialisation();
 
-    insertion(listeBoisson, "Tequila", 40, 0, 8, 20);
-    insertion(listeBoisson, "Vin", 12, 0, 6,
+    insertion(listeBoisson, "tequila", 40, 0, 8, 20);
+    insertion(listeBoisson, "vin", 12, 0, 6,
               5);    //Ca sert d exemple mais apres c est facile de demander a l utilisateur de rentrée ses propes bails avec un menu, jvoulais faire ca vers la fin
-    insertion(listeBoisson, "Rhum", 40, 0, 4, 53);
+    insertion(listeBoisson, "rhum", 40, 0, 4, 53);
 
-    insertion(listeBoisson, "Jus d'orange", 0, 10, 4, 60);
-    insertion(listeBoisson, "Noix de Coco", 0, 4, 8, 1);
-    insertion(listeBoisson, "Coca", 0, 30, 2, 247);
+    insertion(listeBoisson, "jus d'orange", 0, 10, 4, 60);
+    insertion(listeBoisson, "noix de Coco", 0, 4, 8, 1);
+    insertion(listeBoisson, "coca", 0, 30, 2, 247);
 
-    afficherListeBoisson(listeBoisson, NULL);
+    //afficherListeBoisson(listeBoisson, NULL);
 
     ListeCocktail *listeCocktail = initialisationListeCocktail();
 
