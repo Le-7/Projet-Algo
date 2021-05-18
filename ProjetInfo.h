@@ -20,8 +20,8 @@ struct Boisson
     Boisson *suivant;
 };
 
-typedef struct Liste Liste;
-struct Liste
+typedef struct ListeBoisson ListeBoisson;
+struct ListeBoisson
 {
     Boisson *premier;
 };
@@ -30,7 +30,7 @@ typedef struct Cocktail Cocktail;
 struct Cocktail
 {
 
-    Liste *listeBoisson;
+    ListeBoisson *listeBoisson;
     int alcool;
     int sucre;
     int prix;
@@ -46,7 +46,7 @@ struct ListeCocktail{
 
 };
 
-Boisson *obtenirBoisson(Liste *liste, char *nom);
+Boisson *obtenirBoisson(ListeBoisson *liste, char *nom);
 
 typedef struct Commande Commande;
 struct Commande{
