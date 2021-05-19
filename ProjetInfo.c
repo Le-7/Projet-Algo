@@ -9,22 +9,11 @@ int choice = 0;
 
 int cocktailEnStock(Cocktail *pCocktail, ListeBoisson *pListe);
 
-void initialiserTableauChar(char tableau[],int taille){
-
-    while(taille != 0){
-
-        tableau[taille] = "";
-        taille--;
-
-    }
-
-}
-
-int tailleEntier(int entier){
+int tailleEntier(int entier) {
 
     int compteur = 1;
 
-    while(entier > 9){
+    while (entier > 9) {
 
         entier /= 10;
         compteur++;
@@ -35,83 +24,80 @@ int tailleEntier(int entier){
 
 }
 
-void viderBuffer()
-{
+void viderBuffer() {
     int c = 0;
-    while (c != '\n' && c != EOF)
-    {
+    while (c != '\n' && c != EOF) {
         c = getchar();
     }
 }
 
-int lireEntreeConsole(char *chaine, int longueur)
-{
+int lireEntreeConsole(char *chaine, int longueur) {
     //viderBuffer();
     char *positionEntree = NULL;
 
-    if (fgets(chaine, longueur, stdin) != NULL)
-    {
+    if (fgets(chaine, longueur, stdin) != NULL) {
         positionEntree = strchr(chaine, '\n');
-        if (positionEntree != NULL)
-        {
+        if (positionEntree != NULL) {
             *positionEntree = '\0';
-        }
-        else
-        {
+        } else {
             viderBuffer();
         }
         return 1;
-    }
-    else
-    {
+    } else {
         viderBuffer();
         return 0;
     }
 }
 
-void afficherRetourLigne(int nombre){
+void afficherRetourLigne(int nombre) {
 
-    while(nombre != 0){
+    while (nombre != 0) {
 
         printf("\n");
+        fflush(stdout);
         nombre--;
 
     }
 
 }
 
-void afficherEspaces(int nombre){
+void afficherEspaces(int nombre) {
 
-    while(nombre != 0){
+    while (nombre != 0) {
 
         printf(" ");
+        fflush(stdout);
         nombre--;
 
     }
 
 }
 
-void afficherTexte(char *chaine,int nombreCaractereTotal){
+void afficherTexte(char *chaine, int nombreCaractereTotal) {
 
-    int tailleChaine = (int)strlen(chaine);
-    int nombreEspaces = nombreCaractereTotal-tailleChaine-1;
+    int tailleChaine = (int) strlen(chaine);
+    int nombreEspaces = nombreCaractereTotal - tailleChaine - 1;
 
     printf("*");
-    afficherEspaces(nombreEspaces/2);
-    printf("%s",chaine);
-    afficherEspaces(nombreEspaces-(nombreEspaces/2));
+    fflush(stdout);
+    afficherEspaces(nombreEspaces / 2);
+    printf("%s", chaine);
+    fflush(stdout);
+    afficherEspaces(nombreEspaces - (nombreEspaces / 2));
 
 }
 
-void afficherEntier(int entier,int nombreCaractereTotal){
+void afficherEntier(int entier, int nombreCaractereTotal) {
 
     int tailleChaine = tailleEntier(entier);
-    int nombreEspaces = nombreCaractereTotal-tailleChaine-1;
+    int nombreEspaces = nombreCaractereTotal - tailleChaine - 1;
 
     printf("*");
-    afficherEspaces(nombreEspaces/2);
-    printf("%i",entier);
-    afficherEspaces(nombreEspaces-(nombreEspaces/2));
+    fflush(stdout);
+    afficherEspaces(nombreEspaces / 2);
+    printf("%i", entier);
+    fflush(stdout);
+    afficherEspaces(nombreEspaces - (nombreEspaces / 2));
 
 }
 
@@ -193,7 +179,8 @@ void insertionCommande(ListeCommande *listeCommande, Commande *commande) {
     }
 }
 
-void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *nvNom, int nvAlcool, int nvSucre, int nvPrix) {
+void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *nvNom, int nvAlcool, int nvSucre,
+                       int nvPrix) {
     /* Création du nouvel élément */
 
     Cocktail *nouveau = malloc(sizeof(Cocktail));
@@ -237,15 +224,64 @@ int cocktailEnStock(Cocktail *pCocktail, ListeBoisson *liste) {
     return 0;
 }
 
-void afficherInformationBoisson(ListeBoisson *listeBoisson) {
+void afficherinformationCocktail(Cocktail *cocktail, char *texte) {
+
+    if (cocktail != NULL) {
+
+        printf("*************************************************************************\n");
+        fflush(stdout);
+        afficherTexte(texte, 72);
+        printf("*\n");
+        fflush(stdout);
+        printf("*************************************************************************\n");
+        fflush(stdout);
+        printf("*             Nom             *    Sucre    *    Alcool    *    Prix    *\n");
+        fflush(stdout);
+        printf("*                             *             *              *            *\n");
+        fflush(stdout);
+
+        Boisson *boissonActuelle = cocktail->listeBoisson->premier;
+        while (boissonActuelle != NULL) {
+
+            afficherTexte(boissonActuelle->nom, 30);
+            afficherEntier(boissonActuelle->sucre, 14);
+            afficherEntier(boissonActuelle->alcool, 15);
+            afficherEntier(boissonActuelle->prix, 13);
+            boissonActuelle = boissonActuelle->suivant;
+            printf("*\n");
+            fflush(stdout);
+        }
+
+
+        afficherTexte(cocktail->nom, 30);
+        afficherEntier(cocktail->sucre, 14);
+        afficherEntier(cocktail->alcool, 15);
+        afficherEntier(cocktail->prix, 13);
+
+    } else {
+
+        exit(EXIT_FAILURE);
+
+    }
+
+
+}
+
+void afficherInformationBoisson(ListeBoisson *listeBoisson, char *texte) {
 
     if (listeBoisson != NULL) {
 
         printf("****************************************************************************************\n");
-        printf("*                                   ListeBoisson Boissons                                     *\n");
+        fflush(stdout);
+        afficherTexte(texte, 87);
+        printf("*\n");
+        fflush(stdout);
         printf("****************************************************************************************\n");
+        fflush(stdout);
         printf("*             Nom             *    Sucre    *    Alcool    *    Prix    *    Stocks    *\n");
+        fflush(stdout);
         printf("*                             *             *              *            *              *\n");
+        fflush(stdout);
 
 
         Boisson *boissonActuelle = listeBoisson->premier;
@@ -255,14 +291,16 @@ void afficherInformationBoisson(ListeBoisson *listeBoisson) {
             afficherEntier(boissonActuelle->sucre, 14);
             afficherEntier(boissonActuelle->alcool, 15);
             afficherEntier(boissonActuelle->prix, 13);
-            afficherEntier(boissonActuelle->nombreenstock,15);
+            afficherEntier(boissonActuelle->nombreenstock, 15);
             printf("*\n");
+            fflush(stdout);
             boissonActuelle = boissonActuelle->suivant;
 
         }
 
         printf("****************************************************************************************\n");
-    }else{
+        fflush(stdout);
+    } else {
 
         exit(EXIT_FAILURE);
 
@@ -271,13 +309,18 @@ void afficherInformationBoisson(ListeBoisson *listeBoisson) {
 
 void afficherListeBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail) {
 
-    if(listeBoisson != NULL || listeCocktail != NULL){
+    if (listeBoisson != NULL || listeCocktail != NULL) {
 
         printf("*************************************************************************\n");
-        printf("*                            ListeBoisson Boissons                             *\n");
+        fflush(stdout);
+        printf("*                            Liste Boissons                             *\n");
+        fflush(stdout);
         printf("*************************************************************************\n");
+        fflush(stdout);
         printf("*             Nom             *    Sucre    *    Alcool    *    Prix    *\n");
+        fflush(stdout);
         printf("*                             *             *              *            *\n");
+        fflush(stdout);
 
     }
 
@@ -291,13 +334,16 @@ void afficherListeBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockta
             afficherEntier(boissonActuelle->alcool, 15);
             afficherEntier(boissonActuelle->prix, 13);
             printf("*");
+            fflush(stdout);
 
             if (boissonActuelle->nombreenstock <= 0) {
 
                 printf("*    RUPTURE DE STOCK\n");
+                fflush(stdout);
 
             }
             printf("\n");
+            fflush(stdout);
             boissonActuelle = boissonActuelle->suivant;
 
         }
@@ -306,53 +352,32 @@ void afficherListeBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockta
     if (listeCocktail != NULL) {
 
         Cocktail *cocktailactuel = listeCocktail->premier;
-        while (cocktailactuel != NULL)
-        {
-            afficherTexte(cocktailactuel->nom,30);
-            afficherEntier(cocktailactuel->sucre,14);
-            afficherEntier(cocktailactuel->alcool,15);
-            afficherEntier(cocktailactuel->prix,13);
+        while (cocktailactuel != NULL) {
+            afficherTexte(cocktailactuel->nom, 30);
+            afficherEntier(cocktailactuel->sucre, 14);
+            afficherEntier(cocktailactuel->alcool, 15);
+            afficherEntier(cocktailactuel->prix, 13);
             printf("*");
+            fflush(stdout);
 
             if (cocktailEnStock(cocktailactuel, listeBoisson)) {
 
                 printf("*    RUPTURE DE STOCK\n");
+                fflush(stdout);
 
             }
             printf("\n");
+            fflush(stdout);
             cocktailactuel = cocktailactuel->suivant;
         }
     }
 
-    if(listeBoisson != NULL || listeCocktail != NULL){
+    if (listeBoisson != NULL || listeCocktail != NULL) {
 
         printf("*************************************************************************\n");
+        fflush(stdout);
         afficherRetourLigne(3);
 
-    }
-}
-
-void afficherListeCocktail(ListeBoisson *listeBoisson, ListeCocktail *liste) {
-    if (liste == NULL) {
-        exit(EXIT_FAILURE);
-    }
-
-    Cocktail *actuel = liste->premier; /*on affiche l élément actuel qu on assigne au debut au premier élément de la liste*/
-    while (actuel != NULL)          /*si il y a plus d élément on quitte*/
-    {
-        /*on affiche l élément et apres on passe au suivant*/
-
-        if (cocktailEnStock(actuel, listeBoisson) == 0) {
-            printf(" ||%s|| , %i pourcents d'alcool, %i pourcents de sucre, %i euros\n ", actuel->nom, actuel->alcool,
-                   actuel->sucre, actuel->prix);
-        } else {
-
-            printf(" ||%s|| , %i pourcents d'alcool, %i pourcents de sucre, %i euros RUPTURE DE STOCK\n ", actuel->nom,
-                   actuel->alcool,
-                   actuel->sucre, actuel->prix);
-
-        }
-        actuel = actuel->suivant;
     }
 }
 
@@ -365,11 +390,13 @@ void afficherListeCommandes(ListeCommande *listeCommande) {
     }
 
     printf("Les clients ont commande: \n");
+    fflush(stdout);
 
     Commande *commande = listeCommande->premier;
     while (commande != NULL) {
 
         printf(" 1 %s\n", commande->nom);
+        fflush(stdout);
         commande = commande->suivant;
 
     }
@@ -449,51 +476,56 @@ Cocktail *obtenirCocktail(ListeCocktail *listeCocktail, char *nom) {
     return NULL;
 }
 
-void gererStocks(ListeBoisson *listeBoisson){
+void gererStocks(ListeBoisson *listeBoisson) {
 
-    afficherInformationBoisson(listeBoisson);
+    afficherInformationBoisson(listeBoisson, "Liste Boisson");
     afficherRetourLigne(3);
 
     printf("Voulez vous commander une boisson?\n");
+    fflush(stdout);
 
     char reponse[10] = {""};
 
-    lireEntreeConsole(reponse,10);
+    lireEntreeConsole(reponse, 10);
 
-    if(strcmp(reponse,"oui") == 0){
+    if (strcmp(reponse, "oui") == 0) {
 
 
         printf("Quelle boisson voulez vous commander?\n");
+        fflush(stdout);
         char nomBoisson[50] = {""};
-        lireEntreeConsole(nomBoisson,50);
+        lireEntreeConsole(nomBoisson, 50);
 
-        if(listeBoissonContient(listeBoisson,nomBoisson) == 1){
+        if (listeBoissonContient(listeBoisson, nomBoisson) == 1) {
 
             int condition = 0;
             char quantite[10];
 
-            while(condition == 0){
+            while (condition == 0) {
 
-            printf("Quelle quantite voulez vous commander?\n");
+                printf("Quelle quantite voulez vous commander?\n");
+                fflush(stdout);
 
-            lireEntreeConsole(quantite,10);
+                lireEntreeConsole(quantite, 10);
 
-                if(strtol(quantite,NULL,10) == 0L) {
+                if (strtol(quantite, NULL, 10) == 0L) {
 
                     printf("Veuillez entrer un chiffre !\n");
+                    fflush(stdout);
 
-                }else if(strtol(quantite,NULL,10) <= 0){
+                } else if (strtol(quantite, NULL, 10) <= 0) {
 
                     printf("Veuillez entrer un chiffre superieur a 0!\n");
+                    fflush(stdout);
 
-                }else{
+                } else {
 
                     condition = 1;
 
                 }
             }
 
-                obtenirBoisson(listeBoisson, nomBoisson)->nombreenstock += strtol(quantite, NULL, 10);
+            obtenirBoisson(listeBoisson, nomBoisson)->nombreenstock += strtol(quantite, NULL, 10);
 
         }
 
@@ -506,14 +538,15 @@ void gererStocks(ListeBoisson *listeBoisson){
 
 void creationCocktail(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, int client) {
 
-    char nom[50] = {""};
+    char *nom = malloc(50 * sizeof(char));
     int condition = 1;
 
-    while(condition == 1) {
+    while (condition == 1) {
 
         printf("Quel est le nom de votre Cocktail ?\n");
+        fflush(stdout);
         lireEntreeConsole(nom, 50);
-        if(strcmp(nom,"") != 0){
+        if (strcmp(nom, "") != 0) {
 
             condition = 0;
 
@@ -524,6 +557,7 @@ void creationCocktail(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, 
     Cocktail cocktail;
     cocktail.listeBoisson = initialisation();
 
+
     int alcool = 0;
     int sucre = 0;
     int prix = 0;
@@ -532,17 +566,21 @@ void creationCocktail(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, 
     while (condition == 0) {
 
         printf("Quelle boisson voulez vous utiliser?\n");
+        fflush(stdout);
 
         lireEntreeConsole(nomBoisson, 100);
 
-        if (listeBoissonContient(listeBoisson, nomBoisson) == 0) {
+        if (listeBoissonContient(listeBoisson, nomBoisson) == 0 ||
+            (client == 0 && obtenirBoisson(listeBoisson, nomBoisson)->nombreenstock <= 0)) {
             printf("Nous ne proposons pas cette boisson\n");
+            fflush(stdout);
         } else {
             Boisson *boisson = obtenirBoisson(listeBoisson, nomBoisson);
 
             if (boisson->nombreenstock == 0) {
 
                 printf("Cette boisson est en rupture de stock\n");
+                fflush(stdout);
             } else {
 
                 alcool += boisson->alcool;
@@ -557,8 +595,9 @@ void creationCocktail(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, 
 
 
         printf("Voulez vous utiliser une autre boisson?\n");
+        fflush(stdout);
         char reponse[10];
-        lireEntreeConsole(reponse,10);
+        lireEntreeConsole(reponse, 10);
 
         if (strcmp(reponse, "non") == 0) {
 
@@ -568,19 +607,26 @@ void creationCocktail(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, 
 
     }
 
-    afficherListeBoisson(cocktail.listeBoisson, NULL);
-    insertionCocktail(listeCocktail, cocktail.listeBoisson, nom, alcool / compteur, sucre / compteur, (prix + (prix / 10)));
+    cocktail.nom = nom;
+    cocktail.sucre = sucre;
+    cocktail.prix = prix;
+    cocktail.alcool = alcool;
+
+    afficherinformationCocktail(&cocktail, "Voici les details de votre cocktail");
+    insertionCocktail(listeCocktail, cocktail.listeBoisson, nom, alcool / compteur, sucre / compteur,
+                      (prix + (prix / 10)));
     afficherRetourLigne(3);
 }
 
 void ajouterBoisson(ListeBoisson *listeBoisson) {
 
-    char nomBoisson[50];
+    char *nomBoisson = malloc(50 * sizeof(char));
 
     printf("Entrez le nom de votre boisson (30 caracteres max)\n");
-    lireEntreeConsole(nomBoisson,50);
+    fflush(stdout);
+    lireEntreeConsole(nomBoisson, 50);
 
-    if(strlen(nomBoisson) > 30){
+    if (strlen(nomBoisson) > 30) {
 
         ajouterBoisson(listeBoisson);
         return;
@@ -588,47 +634,55 @@ void ajouterBoisson(ListeBoisson *listeBoisson) {
     }
 
     char sucre[10] = {""};
-    printf("Entrez le pourcentage d'alcool de votre boisson [0-100]\n");
-    lireEntreeConsole(sucre,10);
+    printf("Entrez le pourcentage de sucre de votre boisson [0-100]\n");
+    fflush(stdout);
+    lireEntreeConsole(sucre, 10);
 
-    while(strtol(sucre,NULL,10) < 0 || strtol(sucre,NULL,10) > 100) {
+    while (strtol(sucre, NULL, 10) < 0 || strtol(sucre, NULL, 10) > 100) {
 
         printf("Entrez le pourcentage de sucre de votre boisson [0-100]\n");
-        lireEntreeConsole(sucre,10);
+        fflush(stdout);
+        lireEntreeConsole(sucre, 10);
 
     }
 
     char alcool[10] = {""};
     printf("Entrez le pourcentage d'alcool de votre boisson [0-100]\n");
-    lireEntreeConsole(alcool,10);
+    fflush(stdout);
+    lireEntreeConsole(alcool, 10);
 
-    while(strtol(alcool,NULL,10) < 0 || strtol(alcool,NULL,10) > 100) {
+    while (strtol(alcool, NULL, 10) < 0 || strtol(alcool, NULL, 10) > 100) {
 
         printf("Entrez le pourcentage d'alcool de votre boisson [0-100]\n");
-        lireEntreeConsole(alcool,10);
+        fflush(stdout);
+        lireEntreeConsole(alcool, 10);
 
     }
 
     char prix[10] = {""};
-    printf("Entrez le pourcentage d'alcool de votre boisson [0-100]\n");
-    lireEntreeConsole(prix,10);
+    printf("Entrez le prix de votre boisson [0-100]\n");
+    fflush(stdout);
+    lireEntreeConsole(prix, 10);
 
-    while(strtol(prix,NULL,10) < 0) {
+    while (strtol(prix, NULL, 10) < 0) {
 
         printf("Entrez le prix de votre boisson (>0)\n");
-        lireEntreeConsole(prix,10);
+        fflush(stdout);
+        lireEntreeConsole(prix, 10);
 
     }
 
-    insertion(listeBoisson,nomBoisson, strtol(alcool,NULL,10), strtol(sucre,NULL,10),strtol(prix,NULL,10),0);
+    insertion(listeBoisson, nomBoisson, strtol(alcool, NULL, 10), strtol(sucre, NULL, 10), strtol(prix, NULL, 10), 0);
 
     printf("Votre boisson a ete ajoutee\n");
+    fflush(stdout);
 
     afficherRetourLigne(3);
 
 }
 
-void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, ListeCommande *listeCommande, int *chiffreAffaire) {
+void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, ListeCommande *listeCommande,
+                        int *chiffreAffaire) {
 
     char choix[10];
 
@@ -636,18 +690,28 @@ void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail
 
 
         printf("Vous êtes dans le menu Barman\n");
+        fflush(stdout);
         printf("Vous pouvez :\n");
+        fflush(stdout);
         printf("1. Gerer commandes\n");
+        fflush(stdout);
         printf("2. Creer un Cocktail\n");
+        fflush(stdout);
         printf("3. Gerer les stocks\n");
+        fflush(stdout);
         printf("4. Voir le chiffre d'affaires\n");
+        fflush(stdout);
         printf("5. Afficher liste boissons\n");
+        fflush(stdout);
         printf("6. Ajout nouvelle Boisson\n");
-        printf("7. Quitter");
+        fflush(stdout);
+        printf("7. Quitter\n");
+        fflush(stdout);
         printf("Tapez 1, 2, 3, 4, 5, 6 ou 7\n");
+        fflush(stdout);
 
-        lireEntreeConsole(choix,10);
-        choice = strtol(choix,NULL,10);
+        lireEntreeConsole(choix, 10);
+        choice = strtol(choix, NULL, 10);
 
         afficherRetourLigne(3);
 
@@ -671,7 +735,8 @@ void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail
             case 4:
 
                 choice = 0;
-                printf("Le chiffre d'affaires du bar est de %i\n",*chiffreAffaire);
+                printf("Le chiffre d'affaires du bar est de %i\n", *chiffreAffaire);
+                fflush(stdout);
                 afficherRetourLigne(3);
                 break;
 
@@ -698,11 +763,13 @@ void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail
 Commande *commanderBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, int *chiffreAffaire) {
 
     printf("Voici la listeBoisson des Boissons proposées: \n");
+    fflush(stdout);
     afficherListeBoisson(listeBoisson, listeCocktail);
 
     printf("Entrez le nom de votre Boisson\n");
+    fflush(stdout);
     char nomBoisson[100] = {0};
-    lireEntreeConsole(nomBoisson,100);
+    lireEntreeConsole(nomBoisson, 100);
 
     if (listeBoissonContient(listeBoisson, nomBoisson) == 1) {
 
@@ -715,12 +782,16 @@ Commande *commanderBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockt
             commande->nom = boisson->nom;
             commande->suivant = NULL;
             *chiffreAffaire += boisson->prix;
-            printf("Vous avez commander %s, vous serez servi rapidement\n",boisson->nom);
+            printf("Vous avez commander %s, vous serez servi rapidement\n", boisson->nom);
+            fflush(stdout);
+            printf("Le prix de votre commande est de %i euros\n", boisson->prix);
+            fflush(stdout);
             return commande;
 
         } else {
 
             printf("Nous n'avons plus de %s en stock\n", nomBoisson);
+            fflush(stdout);
         }
 
     } else if (listeCocktailContient(listeCocktail, nomBoisson)) {
@@ -743,7 +814,10 @@ Commande *commanderBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockt
             commande->suivant = NULL;
 
             *chiffreAffaire += cocktail->prix;
-            printf("Vous avez commander %s, vous serez servi rapidement\n",cocktail->nom);
+            printf("Vous avez commande %s, vous serez servi rapidement\n", cocktail->nom);
+            fflush(stdout);
+            printf("Le prix de votre commande est de %i euros\n", cocktail->prix);
+            fflush(stdout);
             return commande;
         }
 
@@ -751,6 +825,7 @@ Commande *commanderBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockt
     } else {
 
         printf("Nous ne proposons pas cette boisson\n");
+        fflush(stdout);
         return NULL;
 
     }
@@ -759,7 +834,8 @@ Commande *commanderBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockt
 
 }
 
-void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, ListeCommande *listeCommandes,int *chiffreAffaire) {
+void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, ListeCommande *listeCommandes,
+                        int *chiffreAffaire) {
 
     int condition = 1;
     char choix[10];
@@ -767,15 +843,22 @@ void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, Li
     while (condition == 1) {
 
         printf("Vous êtes dans le menu client\n");
+        fflush(stdout);
         printf("Vous pouvez :\n");
+        fflush(stdout);
         printf("1. Commander une boisson\n");
+        fflush(stdout);
         printf("2. Voir la cartes des boissons\n");
+        fflush(stdout);
         printf("3.Créer un Cocktail\n");
+        fflush(stdout);
         printf("4. Quitter\n");
+        fflush(stdout);
         printf("Tapez 1, 2, 3 ou 4\n");
+        fflush(stdout);
 
-        lireEntreeConsole(choix,10);
-        choice = strtol(choix,NULL,10);
+        lireEntreeConsole(choix, 10);
+        choice = strtol(choix, NULL, 10);
 
         switch (choice) {
 
@@ -788,7 +871,6 @@ void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, Li
             case 2:
                 choice = 0;
                 afficherListeBoisson(listeBoisson, pCocktail);
-                afficherListeCocktail(listeBoisson,pCocktail);
                 break;
 
             case 3:
@@ -807,22 +889,28 @@ void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, Li
 
 }
 
-void afficherMenu(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, ListeCommande *listeCommandes, int *chiffreAffaire) {
+void afficherMenu(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, ListeCommande *listeCommandes,
+                  int *chiffreAffaire) {
 
     int condition = 1;
 
     while (condition == 1) {
 
         printf("Vous êtes :\n");
+        fflush(stdout);
         printf("1. Barman\n");
+        fflush(stdout);
         printf("2. Client\n");
+        fflush(stdout);
         printf("3. Quitter\n");
+        fflush(stdout);
         printf("Tapez 1,2 ou 3\n");
+        fflush(stdout);
 
         char choix[10];
 
-        lireEntreeConsole(choix,10);
-        choice = strtol(choix,NULL,10);
+        lireEntreeConsole(choix, 10);
+        choice = strtol(choix, NULL, 10);
 
         if (choice == 1) {
             choice = 0;
@@ -830,13 +918,13 @@ void afficherMenu(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, List
 
         } else if (choice == 2) {
             choice = 0;
-            afficherMenuClient(listeBoisson, listeCocktail, listeCommandes,chiffreAffaire);
+            afficherMenuClient(listeBoisson, listeCocktail, listeCommandes, chiffreAffaire);
 
         } else if (choice == 3) {
             choice = 0;
             condition = 0;
 
-        }else{
+        } else {
 
             choice = 0;
 
@@ -848,11 +936,12 @@ void afficherMenu(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, List
 int main() {
 
     printf("Bienvenue dans le Bar !\n");
+    fflush(stdout);
 
     ListeBoisson *listeBoisson = initialisation();
 
     insertion(listeBoisson, "tequila", 40, 0, 8, 20);
-    insertion(listeBoisson, "vin", 12, 0, 6,5);
+    insertion(listeBoisson, "vin", 12, 0, 6, 5);
     insertion(listeBoisson, "rhum", 40, 0, 4, 53);
     insertion(listeBoisson, "jus d'orange", 0, 10, 4, 60);
     insertion(listeBoisson, "noix de Coco", 0, 4, 8, 1);
