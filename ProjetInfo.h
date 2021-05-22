@@ -39,7 +39,7 @@ struct Cocktail
 
 };
 
-typedef struct ListeCocktail ListeCocktail;
+typedef struct ListeCocktail ListeCocktail;//On définit la liste des cocktails
 struct ListeCocktail{
 
     struct Cocktail *premier;
@@ -48,7 +48,7 @@ struct ListeCocktail{
 
 Boisson *obtenirBoisson(ListeBoisson *liste, char *nom);
 
-typedef struct Commande Commande;
+typedef struct Commande Commande;//On définit les commandes
 struct Commande{
 
     char *nom;
@@ -56,7 +56,7 @@ struct Commande{
 
 };
 
-typedef struct ListeCommande ListeCommande;
+typedef struct ListeCommande ListeCommande;//On définit la liste des commandes
 struct ListeCommande{
 
     struct Commande *premier;
