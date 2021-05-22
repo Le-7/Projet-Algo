@@ -49,7 +49,7 @@ int lireEntreeConsole(char *chaine, int longueur) {
     }
 }
 
-void afficherRetourLigne(int nombre) { /*Création fonction retour ligne pour */
+void afficherRetourLigne(int nombre) {        /*Création fonction retour ligne pour */
 
     while (nombre != 0) {
 
@@ -60,12 +60,12 @@ void afficherRetourLigne(int nombre) { /*Création fonction retour ligne pour */
 
 }
 
-void afficherEspaces(int nombre) { /*Création fonction afficher espace*/
+void afficherEspaces(int nombre) {           /*Création fonction afficher espace*/
 
-    while (nombre != 0) { /*Boucle*/
+    while (nombre != 0) {                    /*Boucle*/
 
-        printf(" "); /*Affiche espace*/
-                nombre--; /*Décrémentation*/
+        printf(" ");                         /*Affiche espace*/
+                nombre--;                    /*Décrémentation*/
 
     }
 
@@ -96,7 +96,7 @@ void afficherEntier(int entier, int nombreCaractereTotal) {
 
 }
 
-ListeCocktail *initialisationListeCocktail() { /*Création de la liste des cocktails*/
+ListeCocktail *initialisationListeCocktail() {                       /*Création de la liste des cocktails*/
     ListeCocktail *listeCocktail1 = malloc(sizeof(*listeCocktail1)); /*Allocation de la mémoire nécessaire*/
     listeCocktail1->premier = NULL;
 
@@ -109,7 +109,7 @@ ListeBoisson *initialisation() {
     ListeBoisson *liste = malloc(sizeof(*liste));
     Boisson *element = malloc(sizeof(*element));  /*on allocalise la memoire nécessaire*/
 
-    if (liste == NULL || element == NULL)     /*s'il n'y a rien, on quitte*/
+    if (liste == NULL || element == NULL)         /*s'il n'y a rien, on quitte*/
     {
         exit(EXIT_FAILURE);
     }
@@ -129,7 +129,7 @@ ListeCommande *initialisationCommande() {
     ListeCommande *liste = malloc(sizeof(*liste));
     Commande *element = malloc(sizeof(*element));  /*on allocalise la memoire nécessaire*/
 
-    if (liste == NULL || element == NULL)     /*s'il n'y a rien, on quitte*/
+    if (liste == NULL || element == NULL)          /*s'il n'y a rien, on quitte*/
     {
         exit(EXIT_FAILURE);
     }
@@ -144,9 +144,9 @@ ListeCommande *initialisationCommande() {
 void insertion(ListeBoisson *liste, char *nvNom, int nvAlcool, int nvSucre, int nvPrix, int nvNombreenstock) {
     /* Création du nouvel élément */
 
-    Boisson *nouveau = malloc(sizeof(Boisson)); /*Allocation de la mémoire nécessaitr*/
+    Boisson *nouveau = malloc(sizeof(Boisson)); /*Allocation de la mémoire nécessaire*/
 
-    if (liste == NULL || nouveau == NULL) { /*S'il n'y a rien, on quitte*/
+    if (liste == NULL || nouveau == NULL) {     /*S'il n'y a rien, on quitte*/
         exit(EXIT_FAILURE);
     }
 
@@ -179,7 +179,7 @@ void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *n
 
     Cocktail *nouveau = malloc(sizeof(Cocktail)); /*Allocation de la mémoire nécessaire*/
 
-    if (liste == NULL || nouveau == NULL) { /*S'il n'y a rien, on quitte*/
+    if (liste == NULL || nouveau == NULL) {       /*S'il n'y a rien, on quitte*/
         exit(EXIT_FAILURE);
     }
 
@@ -199,7 +199,7 @@ void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *n
 
 int cocktailEnStock(Cocktail *pCocktail, ListeBoisson *liste) { /*Vérifier les stocks d'un cocktail*/
 
-    if (pCocktail->listeBoisson == NULL) { /*S'il n'y a rien, on quitte*/
+    if (pCocktail->listeBoisson == NULL) {                      /*S'il n'y a rien, on quitte*/
         exit(EXIT_FAILURE);
     }
 
@@ -313,7 +313,7 @@ void afficherListeBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockta
             
             if (boissonActuelle->nombreenstock <= 0) { /*Si le stock de boisson est nul*/
 
-                printf("*    RUPTURE DE STOCK\n"); /*On affiche "rupture de stock"*/
+                printf("*    RUPTURE DE STOCK\n");     /*On affiche "rupture de stock"*/
                 
             }
             printf("\n");
@@ -334,7 +334,7 @@ void afficherListeBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockta
             
             if (cocktailEnStock(cocktailactuel, listeBoisson)) { /*Si le stock de boisson est nul*/
 /*Alors un cocktail qui contient cette boisson n'est plus disponible non plus*/
-                printf("*    RUPTURE DE STOCK\n"); /*On affiche "rupture de stock"*/
+                printf("*    RUPTURE DE STOCK\n");               /*On affiche "rupture de stock"*/
                 
             }
             printf("\n");
@@ -350,7 +350,7 @@ void afficherListeBoisson(ListeBoisson *listeBoisson, ListeCocktail *listeCockta
     }
 }
 
-void afficherListeCommandes(ListeCommande *listeCommande) { /*Afficher l'historique des commandes*/
+void afficherListeCommandes(ListeCommande *listeCommande) {   /*Afficher l'historique des commandes*/
 
     if (listeCommande == NULL) {
 
@@ -375,7 +375,7 @@ int listeCocktailContient(ListeCocktail *liste, char *nom) {
 
     Cocktail *actuel = liste->premier; /*on affiche l'élément actuel qu'on assigne au début au premier élément de la liste*/
 
-    while (actuel != NULL)          /*s'il n'y a plus d élément on quitte*/
+    while (actuel != NULL)             /*s'il n'y a plus d élément on quitte*/
     {
 
         if (strcmp(actuel->nom, nom) == 0) {
@@ -383,7 +383,7 @@ int listeCocktailContient(ListeCocktail *liste, char *nom) {
             return 1;
 
         }
-        actuel = actuel->suivant;  /*on affiche l'élément et apres on passe au suivant*/
+        actuel = actuel->suivant;      /*on affiche l'élément et apres on passe au suivant*/
     }
 
     return 0;
@@ -393,7 +393,7 @@ int listeBoissonContient(ListeBoisson *liste, char *nom) {
 
     Boisson *actuel = liste->premier; /*on affiche l'élément actuel qu'on assigne au début au premier élément de la liste*/
 
-    while (actuel != NULL)          /*s'il n'y a plus d élément on quitte*/
+    while (actuel != NULL)            /*s'il n'y a plus d élément on quitte*/
     {
 
         if (strcmp(actuel->nom, nom) == 0) {
@@ -401,7 +401,7 @@ int listeBoissonContient(ListeBoisson *liste, char *nom) {
             return 1;
 
         }
-        actuel = actuel->suivant;  /*on affiche l'élément et après on passe au suivant*/
+        actuel = actuel->suivant;     /*on affiche l'élément et après on passe au suivant*/
     }
 
     return 0;
@@ -454,7 +454,7 @@ void gererStocks(ListeBoisson *listeBoisson) {
 
     lireEntreeConsole(reponse, 10);
 
-    if (strcmp(reponse, "oui") == 0) { /*Si la réponse est "oui" */
+    if (strcmp(reponse, "oui") == 0) {                     /*Si la réponse est "oui" */
 
 
         printf("Quelle boisson voulez vous commander?\n"); /*On affiche */
@@ -631,7 +631,7 @@ void ajouterBoisson(ListeBoisson *listeBoisson) {
 }
 
 void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, ListeCommande *listeCommande,
-                        int *chiffreAffaire) { /*Affichage du menu BARMAN*/
+                        int *chiffreAffaire) {               /*Affichage du menu BARMAN*/
 
     char choix[10];
 
@@ -780,7 +780,7 @@ void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, Li
                 printf("4. Quitter\n");
                 printf("Tapez 1, 2, 3 ou 4\n");
         
-        lireEntreeConsole(choix, 10); /*Utilisation de la base 10*/
+        lireEntreeConsole(choix, 10);     /*Utilisation de la base 10*/
         choice = strtol(choix, NULL, 10); /*Utilisation de strol pour convertir le chaine en long*/
 
         switch (choice) {
@@ -827,10 +827,10 @@ void afficherMenu(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, List
         
         char choix[10];
 
-        lireEntreeConsole(choix, 10); /*Utilisation de la base 10*/
+        lireEntreeConsole(choix, 10);     /*Utilisation de la base 10*/
         choice = strtol(choix, NULL, 10); /*Utilisation de strol pour convertir le chaine en long*/
 
-        if (choice == 1) { /*Si l'utilisateur entre 1, le menu BARMAN s'affiche*/
+        if (choice == 1) {        /*Si l'utilisateur entre 1, le menu BARMAN s'affiche*/
             choice = 0;
             afficherMenuBarman(listeBoisson, listeCocktail, listeCommandes, chiffreAffaire);
 
