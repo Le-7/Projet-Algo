@@ -457,7 +457,7 @@ void gererStocks(ListeBoisson *listeBoisson) {
     if (strcmp(reponse, "oui") == 0) { /*Si la réponse est "oui" */
 
 
-        printf("Quelle boisson voulez vous commander?\n"); /*On affiche cette question*/
+        printf("Quelle boisson voulez vous commander?\n"); /*On affiche */
                 char nomBoisson[50] = {""};
         lireEntreeConsole(nomBoisson, 50);
 
@@ -476,9 +476,9 @@ void gererStocks(ListeBoisson *listeBoisson) {
 
                     printf("Veuillez entrer un chiffre !\n");
                     
-                } else if (strtol(quantite, NULL, 10) <= 0) { /*Si la quantité est commandée est inf ou égale à 0*/
+                } else if (strtol(quantite, NULL, 10) <= 0) {
 
-                    printf("Veuillez entrer un chiffre superieur a 0!\n"); /*On demande d'entrer un entier supérieur*/
+                    printf("Veuillez entrer un chiffre superieur a 0!\n");
                     
                 } else {
 
@@ -631,7 +631,7 @@ void ajouterBoisson(ListeBoisson *listeBoisson) {
 }
 
 void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail, ListeCommande *listeCommande,
-                        int *chiffreAffaire) {
+                        int *chiffreAffaire) { /*Affichage du menu BARMAN*/
 
     char choix[10];
 
@@ -656,43 +656,43 @@ void afficherMenuBarman(ListeBoisson *listeBoisson, ListeCocktail *listeCocktail
 
         switch (choice) {
 
-            case 1:
+            case 1: /*Si choix 1*/
                 choice = 0;
-                afficherListeCommandes(listeCommande);
+                afficherListeCommandes(listeCommande); /*Appel de la fonction pour afficher la liste de commandes*/
                 break;
 
-            case 2:
+            case 2: /*Si choix 2*/
                 choice = 0;
-                creationCocktail(listeBoisson, listeCocktail, 0);
+                creationCocktail(listeBoisson, listeCocktail, 0); /*Appel de la fonction qui créé les cocktails*/
                 break;
 
-            case 3:
+            case 3: /*Si choix 3*/
                 choice = 0;
-                gererStocks(listeBoisson);
+                gererStocks(listeBoisson); /*Appel de la fonction gérer les stocks*/
                 break;
 
-            case 4:
+            case 4: /*Si choix 4*/
 
                 choice = 0;
-                printf("Le chiffre d'affaires du bar est de %i\n", *chiffreAffaire);
+                printf("Le chiffre d'affaires du bar est de %i\n", *chiffreAffaire); /*Affichage du chiffre d'affaires*/
                                 afficherRetourLigne(3);
                 break;
 
-            case 5:
+            case 5: /*Si choix 5*/
 
                 choice = 0;
-                afficherListeBoisson(listeBoisson, listeCocktail);
+                afficherListeBoisson(listeBoisson, listeCocktail); /*Afficher la liste des boissons et cocktails*/
                 break;
 
-            case 6:
+            case 6: /*Si choix 6*/
 
                 choice = 0;
-                ajouterBoisson(listeBoisson);
+                ajouterBoisson(listeBoisson); /*Appel de la fonction qui ajoute une nouvelle boisson*/
                 break;
 
-            case 7:
+            case 7: /*Si choix 7*/
 
-                choice = 0;
+                choice = 0; /*Retour au menu principal*/
                 return;
         }
     }
@@ -801,7 +801,7 @@ void afficherMenuClient(ListeBoisson *listeBoisson, ListeCocktail *pCocktail, Li
                 creationCocktail(listeBoisson, pCocktail, 1);
                 break;
 
-            case 4: /*Si le choix est de quitter, on quitte */
+            case 4: /*Si le choix est de quitter, on quitte et on revient au menu principal */
                 choice = 0;
                 condition = 0;
                 break;
