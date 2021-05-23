@@ -1,6 +1,6 @@
-/*Projet d'info: Cocktail*/
-/*Antoine Warlet, Mathéo Costa et Anissa Aït Chadi*/
-/*PréING1 MI Groupe 7*/
+/*Projet d'info: Cocktail
+Antoine Warlet, Mathéo Costa et Anissa Aït Chadi
+PréING1 MI Groupe 7*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,7 +53,7 @@ int lireEntreeConsole(char *chaine, int longueur) {   //fonction pour lire les e
     }
 }
 
-void afficherRetourLigne(int nombre) {            /*Création fonction retour ligne pour un meilleur affichage */
+void afficherRetourLigne(int nombre) {            //Création procédure retour ligne pour un meilleur affichage
 
     while (nombre != 0) {
 
@@ -64,12 +64,12 @@ void afficherRetourLigne(int nombre) {            /*Création fonction retour li
 
 }
 
-void afficherEspaces(int nombre) {           /*Création fonction afficher espace*/
+void afficherEspaces(int nombre) {           //Création procédure afficher espace
 
-    while (nombre != 0) {                    /*Boucle*/
+    while (nombre != 0) {                    //Boucle
 
-        printf(" ");                         /*Affiche espace*/
-                nombre--;                    /*Décrémentation*/
+        printf(" ");                         //Affiche espace
+                nombre--;                    //Décrémentation
 
     }
 
@@ -102,8 +102,8 @@ void afficherEntier(int entier, int nombreCaractereTotal) {       //procédure p
 
 }
 
-ListeCocktail *initialisationListeCocktail() {                         /*Création de la liste des cocktails*/
-    ListeCocktail *listeCocktail1 = malloc(sizeof(*listeCocktail1));   /*Allocation de la mémoire nécessaire*/
+ListeCocktail *initialisationListeCocktail() {                         //Création de la liste des cocktails
+    ListeCocktail *listeCocktail1 = malloc(sizeof(*listeCocktail1));   //Allocation de la mémoire nécessaire
     listeCocktail1->premier = NULL;
 
     return listeCocktail1;
@@ -113,13 +113,13 @@ ListeCocktail *initialisationListeCocktail() {                         /*Créati
 
 ListeBoisson *initialisation() {
     ListeBoisson *liste = malloc(sizeof(*liste));
-    Boisson *element = malloc(sizeof(*element));  /*on alloue la memoire nécessaire*/
+    Boisson *element = malloc(sizeof(*element));  //on alloue la memoire nécessaire
 
-    if (liste == NULL || element == NULL)         /*s'il n'y a rien, on quitte*/
+    if (liste == NULL || element == NULL)         //s'il n'y a rien, on quitte
     {
         exit(EXIT_FAILURE);
     }
-    /*valeurs de base des éléments des boissons*/
+    //valeurs de base des éléments des boissons
     element->nom = NULL;
     element->alcool = 0;
     element->sucre = 0;
@@ -133,9 +133,9 @@ ListeBoisson *initialisation() {
 
 ListeCommande *initialisationCommande() {
     ListeCommande *liste = malloc(sizeof(*liste));
-    Commande *element = malloc(sizeof(*element));  /*on alloue la memoire nécessaire*/
+    Commande *element = malloc(sizeof(*element));  //on alloue la memoire nécessaire
 
-    if (liste == NULL || element == NULL)          /*s'il n'y a rien, on quitte*/
+    if (liste == NULL || element == NULL)          //s'il n'y a rien, on quitte
     {
         exit(EXIT_FAILURE);
     }
@@ -148,11 +148,11 @@ ListeCommande *initialisationCommande() {
 }
 
 void insertion(ListeBoisson *liste, char *nvNom, int nvAlcool, int nvSucre, int nvPrix, int nvNombreenstock) {
-    /* Création du nouvel élément */
+    // Création du nouvel élément
 
-    Boisson *nouveau = malloc(sizeof(Boisson)); /*On alloue la mémoire nécessaire*/
+    Boisson *nouveau = malloc(sizeof(Boisson)); //On alloue la mémoire nécessaire
 
-    if (liste == NULL || nouveau == NULL) {     /*S'il n'y a rien, on quitte*/
+    if (liste == NULL || nouveau == NULL) {     //S'il n'y a rien, on quitte
         exit(EXIT_FAILURE);
     }
 
@@ -162,7 +162,7 @@ void insertion(ListeBoisson *liste, char *nvNom, int nvAlcool, int nvSucre, int 
     nouveau->prix = nvPrix;
     nouveau->nombreenstock = nvNombreenstock;
 
-    /* Insertion de l'élément au début de la liste */
+    //Insertion de l'élément au début de la liste
 
     nouveau->suivant = liste->premier;
 
@@ -181,11 +181,11 @@ void insertionCommande(ListeCommande *listeCommande, Commande *commande) { //Pro
 
 void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *nvNom, int nvAlcool, int nvSucre,
                        int nvPrix) {
-    /* Création du nouvel élément */
+    //Création du nouvel élément 
 
-    Cocktail *nouveau = malloc(sizeof(Cocktail)); /*On alloue la mémoire nécessaire*/
+    Cocktail *nouveau = malloc(sizeof(Cocktail)); //On alloue la mémoire nécessaire
 
-    if (liste == NULL || nouveau == NULL) {       /*S'il n'y a rien, on quitte*/
+    if (liste == NULL || nouveau == NULL) {       //S'il n'y a rien, on quitte
         exit(EXIT_FAILURE);
     }
 
@@ -195,7 +195,7 @@ void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *n
     nouveau->prix = nvPrix;
     nouveau->listeBoisson = listBoissons;
 
-    /* Insertion de l'élément au début de la liste */
+    //Insertion de l'élément au début de la liste 
 
     nouveau->suivant = liste->premier;
 
@@ -203,9 +203,9 @@ void insertionCocktail(ListeCocktail *liste, ListeBoisson *listBoissons, char *n
 
 }
 
-int cocktailEnStock(Cocktail *pCocktail, ListeBoisson *liste) { /* Fonction pour vérifier les stocks d'un cocktail*/
+int cocktailEnStock(Cocktail *pCocktail, ListeBoisson *liste) { //Fonction pour vérifier les stocks d'un cocktail
 
-    if (pCocktail->listeBoisson == NULL) {                      /*S'il n'y a rien, on quitte*/
+    if (pCocktail->listeBoisson == NULL) {                      //S'il n'y a rien, on quitte
         exit(EXIT_FAILURE);
     }
 
@@ -390,9 +390,9 @@ void afficherListeCommandes(ListeCommande *listeCommande) {   //Procédure pour 
 
 int listeCocktailContient(ListeCocktail *liste, char *nom) {
 
-    Cocktail *actuel = liste->premier; /*on affiche l'élément actuel qu'on assigne au début au premier élément de la liste*/
+    Cocktail *actuel = liste->premier; //on affiche l'élément actuel qu'on assigne au début au premier élément de la liste
 
-    while (actuel != NULL)             /*s'il n'y a plus d élément on quitte*/
+    while (actuel != NULL)             //s'il n'y a plus d élément on quitte
     {
 
         if (strcmp(actuel->nom, nom) == 0) {
@@ -400,7 +400,7 @@ int listeCocktailContient(ListeCocktail *liste, char *nom) {
             return 1;
 
         }
-        actuel = actuel->suivant;      /*on affiche l'élément et apres on passe au suivant*/
+        actuel = actuel->suivant;      //on affiche l'élément et apres on passe au suivant
     }
 
     return 0;
@@ -408,9 +408,9 @@ int listeCocktailContient(ListeCocktail *liste, char *nom) {
 
 int listeBoissonContient(ListeBoisson *liste, char *nom) {
 
-    Boisson *actuel = liste->premier; /*on affiche l'élément actuel qu'on assigne au début au premier élément de la liste*/
+    Boisson *actuel = liste->premier; //on affiche l'élément actuel qu'on assigne au début au premier élément de la liste
 
-    while (actuel != NULL)            /*s'il n'y a plus d élément on quitte*/
+    while (actuel != NULL)            //s'il n'y a plus d élément on quitte
     {
 
         if (strcmp(actuel->nom, nom) == 0) {
@@ -418,7 +418,7 @@ int listeBoissonContient(ListeBoisson *liste, char *nom) {
             return 1;
 
         }
-        actuel = actuel->suivant;     /*on affiche l'élément et après on passe au suivant*/
+        actuel = actuel->suivant;     //on affiche l'élément et après on passe au suivant
     }
 
     return 0;
