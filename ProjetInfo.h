@@ -1,6 +1,6 @@
-//
-// Created by wanto on 10/05/2021.
-//
+/*Projet d'info: Cocktail
+Antoine Warlet, Mathéo Costa et Anissa Aït Chadi
+PréING1 MI Groupe 7*/
 
 #ifndef PROJET_ALGO_PROJETINFO_H
 #define PROJET_ALGO_PROJETINFO_H
@@ -11,7 +11,7 @@
 
 typedef struct Boisson Boisson;
 struct Boisson
-{                           /*Notre boisson à ces caractéristiques et contient un pointeur associé*/
+{                                               //Notre boisson a ces caractéristiques et contient un pointeur associé
     char *nom;
     int alcool;
     int sucre;
@@ -20,7 +20,7 @@ struct Boisson
     Boisson *suivant;
 };
 
-typedef struct ListeBoisson ListeBoisson;       /*On définit la liste avec son premier pointeur (liste chainée) */
+typedef struct ListeBoisson ListeBoisson;       //On définit la liste avec son premier pointeur (liste chainée)
 struct ListeBoisson
 {
     Boisson *premier;
@@ -29,7 +29,7 @@ struct ListeBoisson
 typedef struct Cocktail Cocktail;
 struct Cocktail
 {
-                            /*Notre cocktail à les caractéristiques des boissons et contient un pointeur associé*/
+                                                //Notre cocktail à les caractéristiques des boissons et contient un pointeur associé
     ListeBoisson *listeBoisson;
     int alcool;
     int sucre;
@@ -39,7 +39,7 @@ struct Cocktail
 
 };
 
-typedef struct ListeCocktail ListeCocktail;//On définit la liste des cocktails
+typedef struct ListeCocktail ListeCocktail;     //On définit la liste des cocktails
 struct ListeCocktail{
 
     struct Cocktail *premier;
@@ -48,7 +48,7 @@ struct ListeCocktail{
 
 Boisson *obtenirBoisson(ListeBoisson *liste, char *nom);
 
-typedef struct Commande Commande;//On définit les commandes
+typedef struct Commande Commande;              //On définit les commandes
 struct Commande{
 
     char *nom;
@@ -56,7 +56,7 @@ struct Commande{
 
 };
 
-typedef struct ListeCommande ListeCommande;//On définit la liste des commandes
+typedef struct ListeCommande ListeCommande;   //On définit la liste des commandes
 struct ListeCommande{
 
     struct Commande *premier;
